@@ -39,9 +39,9 @@ $(function () {
         var currentURL = feed.url;
         expect(currentURL).not.toBe(undefined);
         expect(currentURL).not.toBe('');
+        expect(currentURL).toContain('http');
 
       });
-
     });
 
 
