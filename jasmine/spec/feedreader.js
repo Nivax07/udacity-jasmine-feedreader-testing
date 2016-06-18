@@ -41,8 +41,11 @@ $(function () {
       allFeeds.forEach(function (feed) {
 
         var currentURL = feed.url;
+        //make sure it's not undefined
         expect(currentURL).not.toBe(undefined);
+        //make sure it's not an empty string
         expect(currentURL).not.toBe('');
+        //make sure it at least contains 'http', which means 'https' will work too
         expect(currentURL).toContain('http');
 
       });
@@ -59,7 +62,9 @@ $(function () {
       allFeeds.forEach(function (feed) {
 
         var currentName = feed.name;
+        //make sure it's not undefined
         expect(currentName).not.toBe(undefined);
+        //make sure it's not an empty string
         expect(currentName).not.toBe('');
       });
     });
@@ -77,7 +82,7 @@ $(function () {
      */
 
     it('is hidden by default', function () {
-
+      //the body should have the class 'menu-hidden' on load, based on code
       var hiddenOnLoad = $('body').hasClass('menu-hidden');
       expect(hiddenOnLoad).toBe(true);
 
@@ -94,8 +99,10 @@ $(function () {
 
       var menuIcon = $('.menu-icon-link');
 
+      //check that it is visible on click, so it should not have the 'menu-hidden' class
       menuIcon.click();
       expect(document.body.classList.contains('menu-hidden')).toBeFalsy();
+      //check that it is invisible on click, so it should have the 'menu-hidden' class
       menuIcon.click();
       expect(document.body.classList.contains('menu-hidden')).toBeTruthy();
 
@@ -115,12 +122,14 @@ $(function () {
      * the use of Jasmine's beforeEach and asynchronous done() function.
      */
 
+    //do the async shuffle!
     beforeEach(function (done) {
       loadFeed(0, done);
     });
 
     it('contain at least a single .entry element within the .feed container', function (done) {
       var elem = ($('.entry'));
+      //if there is at least one element with an 'entry' class, that means it is defined.
       expect(elem).toBeDefined();
       done();
     });
@@ -137,13 +146,20 @@ $(function () {
      * Remember, loadFeed() is asynchronous.
      */
 
+    //check a random feed that is not the first feed, just incase there are more than 4 feeds ever.
+    var rand = Math.floor((Math.random() * allFeeds.length - 1 ) + 1);
+    var currentTitle = allFeeds[rand].name;
+
+    console.log(rand);
+
+    //do the async shuffle!
     beforeEach(function (done) {
-      loadFeed(2, done);
+      loadFeed(rand, done);
     });
 
     it('when a new feed is loaded by the loadFeed function, the content actually changes', function (done) {
-
-      expect($('.header .header-title').html()).toBe('HTML5 Rocks');
+      //check to make sure the header is the title of the current random feed
+      expect($('.header .header-title').html()).toBe(currentTitle);
       done();
     });
   }); //end New Feed Selection suite
