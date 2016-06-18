@@ -131,6 +131,7 @@ $(function () {
       var elem = ($('.entry'));
       //if there is at least one element with an 'entry' class, that means it is defined.
       expect(elem).toBeDefined();
+      expect(elem.length).toBeGreaterThan(0);
       done();
     });
 
@@ -148,23 +149,24 @@ $(function () {
 
     //check a random feed that is not the first feed, just incase there are more than 4 feeds ever.
     var rand = Math.floor((Math.random() * allFeeds.length - 1 ) + 1);
-    var currentTitle = allFeeds[rand].name;
+    var initialContent, finalContent;
 
-    console.log(rand);
-
-    //do the async shuffle!
     beforeEach(function (done) {
-      loadFeed(rand, done);
+      loadFeed(0, function () {
+        initialContent = $('.header .header-title').html();
+        loadFeed(rand, function () {
+            finalContent = $('.header .header-title').html();
+            done();
+        });
+      });
     });
 
     it('when a new feed is loaded by the loadFeed function, the content actually changes', function (done) {
-      //check to make sure the header is the title of the current random feed
-      expect($('.header .header-title').html()).toBe(currentTitle);
+      //check to make sure the header title of the initial and final content are different
+      expect(initialContent !== finalContent).toBeTruthy();
       done();
     });
   }); //end New Feed Selection suite
-
-
 
 
 }());
