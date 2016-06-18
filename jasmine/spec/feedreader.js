@@ -128,12 +128,27 @@ $(function () {
 
   }); // end Initial Entries suite
 
-  /* TODO: Write a new test suite named "New Feed Selection"
+  /* Write a new test suite named "New Feed Selection" */
 
-   /* TODO: Write a test that ensures when a new feed is loaded
-   * by the loadFeed function that the content actually changes.
-   * Remember, loadFeed() is asynchronous.
-   */
+  describe('New Feed Selection', function () {
+
+    /* Write a test that ensures when a new feed is loaded
+     * by the loadFeed function that the content actually changes.
+     * Remember, loadFeed() is asynchronous.
+     */
+
+    beforeEach(function (done) {
+      loadFeed(2, done);
+    });
+
+    it('when a new feed is loaded by the loadFeed function, the content actually changes', function (done) {
+
+      expect($('.header .header-title').html()).toBe('HTML5 Rocks');
+      done();
+    });
+  }); //end New Feed Selection suite
+
+
 
 
 }());
