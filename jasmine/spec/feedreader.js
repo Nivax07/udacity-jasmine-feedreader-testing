@@ -128,7 +128,7 @@ $(function () {
     });
 
     it('contain at least a single .entry element within the .feed container', function (done) {
-      var elem = ($('.entry'));
+      var elem = ($('.feed .entry'));
       //if there is at least one element with an 'entry' class, that means it is defined.
       expect(elem.length).toBeGreaterThan(0);
       done();
